@@ -16,8 +16,8 @@ export const example = () => {
     // 직교 카메라
     const camera = new THREE.OrthographicCamera(-innerWidth / innerHeight, innerWidth / innerHeight, 1, -1, 0.1, 1000);
 
-    camera.position.x = 1;
-    camera.position.y = 2;
+    camera.position.x = 0;
+    camera.position.y = 1;
     camera.position.z = 5;
 
     camera.lookAt(0, 0, 0);
@@ -41,7 +41,24 @@ export const example = () => {
     scene.add(mesh);
 
     // draw
-    renderer.render(scene, camera);
+
+    const clock = new THREE.Clock();
+
+    function draw() {
+        // mesh.rotation.y += 0.1;
+        const time = clock.getElapsedTime();
+
+        mesh.rotation.y = time;
+        mesh.position.y = time;
+
+        if (mesh.position.y > 3) {
+            mesh.position.y = 0;
+        }
+        renderer.render(scene, camera);
+
+        renderer.setAnimationLoop(draw);
+        //requestAnimationFrame(draw);
+    }
 
     const setSize = () => {
         camera.aspect = innerWidth / innerHeight;
@@ -52,6 +69,8 @@ export const example = () => {
     };
 
     window.addEventListener('resize', setSize);
+
+    draw();
 };
 
 export default example;
