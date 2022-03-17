@@ -48,7 +48,7 @@ export const example = () => {
         // mesh.rotation.y += 0.1;
         const time = clock.getElapsedTime();
 
-        mesh.rotation.y = time;
+        mesh.rotation.y = time * 2;
         mesh.position.y = time;
 
         if (mesh.position.y > 3) {
@@ -57,7 +57,6 @@ export const example = () => {
         renderer.render(scene, camera);
 
         renderer.setAnimationLoop(draw);
-        //requestAnimationFrame(draw);
     }
 
     const setSize = () => {

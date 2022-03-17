@@ -41,20 +41,22 @@ export const example = () => {
     scene.add(mesh);
 
     // draw
-
-    const clock = new THREE.Clock();
+    let oldTime = Date.now();
 
     function draw() {
-        const delta = clock.getDelta();
+        const newTime = Date.now();
+        const deltaTme = newTime - oldTime;
 
-        mesh.rotation.y += delta * 2;
-        mesh.position.y += delta;
+        mesh.rotation.y += deltaTme * 0.001;
+        mesh.position.y += deltaTme * 0.001;
 
         if (mesh.position.y > 3) {
             mesh.position.y = 0;
         }
-        renderer.render(scene, camera);
 
+        oldTime = newTime;
+
+        renderer.render(scene, camera);
         renderer.setAnimationLoop(draw);
     }
 

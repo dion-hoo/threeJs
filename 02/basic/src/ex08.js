@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 
 export const example = () => {
     const renderer = new THREE.WebGLRenderer({
@@ -12,11 +13,11 @@ export const example = () => {
 
     // Scene
     const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog('#000', 3, 7);
 
     // 직교 카메라
     const camera = new THREE.OrthographicCamera(-innerWidth / innerHeight, innerWidth / innerHeight, 1, -1, 0.1, 1000);
 
-    camera.position.x = 0;
     camera.position.y = 1;
     camera.position.z = 5;
 
@@ -27,8 +28,9 @@ export const example = () => {
     scene.add(camera);
 
     const light = new THREE.DirectionalLight('#fff', 0.9);
-    light.position.x = 2;
-    light.position.z = 4;
+    light.position.x = 1;
+    light.position.y = 3;
+    light.position.z = 5;
     scene.add(light);
 
     // Mesh
@@ -36,27 +38,28 @@ export const example = () => {
     const material = new THREE.MeshStandardMaterial({
         color: 'red',
     });
-    const mesh = new THREE.Mesh(geometry, material);
 
+    const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
     // draw
-
-    const clock = new THREE.Clock();
+    let oldTime = Date.now();
 
     function draw() {
-        const delta = clock.getDelta();
+        const newTime = Date.now();
+        const deltaTme = newTime - oldTime;
 
-        mesh.rotation.y += delta * 2;
-        mesh.position.y += delta;
+        oldTime = newTime;
 
-        if (mesh.position.y > 3) {
-            mesh.position.y = 0;
-        }
         renderer.render(scene, camera);
-
         renderer.setAnimationLoop(draw);
     }
+
+    // gsap
+    gsap.to(mesh.position, {
+        duration: 1,
+        x: 2,
+    });
 
     const setSize = () => {
         camera.aspect = innerWidth / innerHeight;

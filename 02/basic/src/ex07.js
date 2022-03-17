@@ -12,11 +12,11 @@ export const example = () => {
 
     // Scene
     const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog('#000', 3, 7);
 
     // 직교 카메라
     const camera = new THREE.OrthographicCamera(-innerWidth / innerHeight, innerWidth / innerHeight, 1, -1, 0.1, 1000);
 
-    camera.position.x = 0;
     camera.position.y = 1;
     camera.position.z = 5;
 
@@ -27,8 +27,9 @@ export const example = () => {
     scene.add(camera);
 
     const light = new THREE.DirectionalLight('#fff', 0.9);
-    light.position.x = 2;
-    light.position.z = 4;
+    light.position.x = 1;
+    light.position.y = 3;
+    light.position.z = 5;
     scene.add(light);
 
     // Mesh
@@ -36,25 +37,34 @@ export const example = () => {
     const material = new THREE.MeshStandardMaterial({
         color: 'red',
     });
-    const mesh = new THREE.Mesh(geometry, material);
 
-    scene.add(mesh);
+    const meshes = [];
+    let mesh;
+    for (let i = 0; i < 10; i++) {
+        mesh = new THREE.Mesh(geometry, material);
+        mesh.position.x = Math.random() * 5 - 2.5;
+        mesh.position.z = Math.random() * 5 - 2.5;
+        scene.add(mesh);
+
+        meshes.push(mesh);
+    }
+
+    scene.add(meshes);
 
     // draw
-
-    const clock = new THREE.Clock();
+    let oldTime = Date.now();
 
     function draw() {
-        const delta = clock.getDelta();
+        const newTime = Date.now();
+        const deltaTme = newTime - oldTime;
 
-        mesh.rotation.y += delta * 2;
-        mesh.position.y += delta;
+        oldTime = newTime;
 
-        if (mesh.position.y > 3) {
-            mesh.position.y = 0;
+        for (let mesh of meshes) {
+            mesh.rotation.y += deltaTme * 0.001;
         }
-        renderer.render(scene, camera);
 
+        renderer.render(scene, camera);
         renderer.setAnimationLoop(draw);
     }
 
