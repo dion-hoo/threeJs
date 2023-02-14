@@ -16,7 +16,14 @@ export const example = () => {
     scene.fog = new THREE.Fog('#000', 3, 7);
 
     // 직교 카메라
-    const camera = new THREE.OrthographicCamera(-innerWidth / innerHeight, innerWidth / innerHeight, 1, -1, 0.1, 1000);
+    const camera = new THREE.OrthographicCamera(
+        -innerWidth / innerHeight,
+        innerWidth / innerHeight,
+        1,
+        -1,
+        0.1,
+        1000
+    );
 
     camera.position.y = 1;
     camera.position.z = 5;

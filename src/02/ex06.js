@@ -14,7 +14,14 @@ export const example = () => {
     const scene = new THREE.Scene();
 
     // 직교 카메라
-    const camera = new THREE.OrthographicCamera(-innerWidth / innerHeight, innerWidth / innerHeight, 1, -1, 0.1, 1000);
+    const camera = new THREE.OrthographicCamera(
+        -innerWidth / innerHeight,
+        innerWidth / innerHeight,
+        1,
+        -1,
+        0.1,
+        1000
+    );
 
     camera.position.x = 0;
     camera.position.y = 1;

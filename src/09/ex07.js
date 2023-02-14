@@ -23,11 +23,21 @@ export default function example() {
     };
 
     const textureLoader = new THREE.TextureLoader(loadingManager);
-    const ambientTexture = textureLoader.load('/assets/img/brick/Brick_Wall_019_ambientOcclusion.jpg');
-    const basecolorTexture = textureLoader.load('/assets/img/brick/Brick_Wall_019_basecolor.jpg');
-    const heightTexture = textureLoader.load('/assets/img/brick/Brick_Wall_019_height.png');
-    const normalTexture = textureLoader.load('/assets/img/brick/Brick_Wall_019_normal.jpg');
-    const roughnessTexture = textureLoader.load('/assets/img/brick/Brick_Wall_019_roughness.jpg');
+    const ambientTexture = textureLoader.load(
+        '/assets/img/brick/Brick_Wall_019_ambientOcclusion.jpg'
+    );
+    const basecolorTexture = textureLoader.load(
+        '/assets/img/brick/Brick_Wall_019_basecolor.jpg'
+    );
+    const heightTexture = textureLoader.load(
+        '/assets/img/brick/Brick_Wall_019_height.png'
+    );
+    const normalTexture = textureLoader.load(
+        '/assets/img/brick/Brick_Wall_019_normal.jpg'
+    );
+    const roughnessTexture = textureLoader.load(
+        '/assets/img/brick/Brick_Wall_019_roughness.jpg'
+    );
 
     // Renderer
     const canvas = document.querySelector('#three-canvas');
@@ -42,7 +52,12 @@ export default function example() {
     const scene = new THREE.Scene();
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
     camera.position.y = 1.5;
     camera.position.z = 6;
     scene.add(camera);

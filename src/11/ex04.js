@@ -4,7 +4,6 @@ import * as CANNON from 'cannon-es';
 import { PreventDragClick } from '../../utils/PreventDragClick.js';
 import { MySphere } from './MySphere.js';
 
-
 export default function example() {
     // Renderer
     const canvas = document.querySelector('#three-canvas');
@@ -21,7 +20,12 @@ export default function example() {
     const scene = new THREE.Scene();
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
     camera.position.y = 6;
     camera.position.z = 10;
     scene.add(camera);
@@ -34,7 +38,7 @@ export default function example() {
 
     light.position.x = 2;
     light.position.y = 3;
-    light.position.z =3;
+    light.position.z = 3;
     light.castShadow = true;
 
     scene.add(light);
@@ -42,17 +46,17 @@ export default function example() {
     // Controls
     new OrbitControls(camera, renderer.domElement);
 
-
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // Cannon (물리 엔진)
     const cannonWorld = new CANNON.World();
-    const defaultMaterial = new CANNON.Material("default");
+    const defaultMaterial = new CANNON.Material('default');
     const defaultContactMaterial = new CANNON.ContactMaterial(
         defaultMaterial,
-        defaultMaterial, {
+        defaultMaterial,
+        {
             friction: 0.2,
-            restitution : 0.4 // 반발력
+            restitution: 0.4, // 반발력
         }
     );
 
@@ -60,25 +64,24 @@ export default function example() {
     // 중력
     cannonWorld.gravity.set(0, -20, 0);
 
-    // 바닥 Geometry, Material 
+    // 바닥 Geometry, Material
     const floorShape = new CANNON.Plane();
     const floorBody = new CANNON.Body({
         mass: 0,
         position: new CANNON.Vec3(0, 0, 0),
         shape: floorShape,
-        material: defaultMaterial
+        material: defaultMaterial,
     });
 
     floorBody.quaternion.setFromAxisAngle(
         new CANNON.Vec3(-1, 0, 0),
         Math.PI / 2
-    )
+    );
     cannonWorld.addBody(floorBody);
 
     // 성능
-    cannonWorld.allowSleep = true; 
+    cannonWorld.allowSleep = true;
     cannonWorld.broadphase = new CANNON.SAPBroadphase(cannonWorld);
-
 
     // Mesh
     const planeGeometry = new THREE.PlaneGeometry(6, 6);
@@ -94,9 +97,6 @@ export default function example() {
 
     scene.add(planeMesh);
 
-
-
-
     // 그리기
     const clock = new THREE.Clock();
 
@@ -106,10 +106,10 @@ export default function example() {
         let cannonStepTime = delta < 0.01 ? 1 / 120 : 1 / 60;
 
         cannonWorld.step(cannonStepTime, delta, 3);
-        spheres.forEach(s => {
+        spheres.forEach((s) => {
             s.mesh.position.copy(s.cannonBody.position);
             s.mesh.quaternion.copy(s.cannonBody.quaternion);
-        })
+        });
 
         renderer.render(scene, camera);
         renderer.setAnimationLoop(draw);
@@ -126,16 +126,17 @@ export default function example() {
     window.addEventListener('resize', setSize);
     canvas.addEventListener('click', () => {
         spheres.push(
-        new MySphere({
-            scene,
-            cannonWorld,
-            geometry : sphereGeometry,
-            material: sphereMaterial,
-            x: (Math.random() - 0.5) * 2,
-            y: Math.random() * 3 + 2,
-            z: (Math.random() - 0.5) * 2,
-            scale: Math.random() + 0.2
-        }));
+            new MySphere({
+                scene,
+                cannonWorld,
+                geometry: sphereGeometry,
+                material: sphereMaterial,
+                x: (Math.random() - 0.5) * 2,
+                y: Math.random() * 3 + 2,
+                z: (Math.random() - 0.5) * 2,
+                scale: Math.random() + 0.2,
+            })
+        );
     });
 
     const preventDragClick = new PreventDragClick(canvas);

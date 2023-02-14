@@ -1,8 +1,8 @@
 import { Mesh } from 'three';
-import {Sphere, Body, Vec3 } from 'cannon-es';
+import { Sphere, Body, Vec3 } from 'cannon-es';
 
 export class MySphere {
-    constructor({scene, cannonWorld, geometry, material, x, y, z, scale}) {
+    constructor({ scene, cannonWorld, geometry, material, x, y, z, scale }) {
         this.scene = scene;
         this.cannonWorld = cannonWorld;
         this.geometry = geometry;
@@ -17,7 +17,6 @@ export class MySphere {
         this.mesh.castShadow = true;
         this.mesh.position.set(this.x, this.y, this.z);
 
-
         this.scene.add(this.mesh);
 
         this.setCannonBody();
@@ -28,8 +27,8 @@ export class MySphere {
         this.cannonBody = new Body({
             mass: 1,
             position: new Vec3(this.x, this.y, this.z),
-            shape
-        })
+            shape,
+        });
 
         this.cannonWorld.addBody(this.cannonBody);
     }

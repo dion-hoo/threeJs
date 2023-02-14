@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as CANNON from 'cannon-es';
 
-
 export default function example() {
     // Renderer
     const canvas = document.querySelector('#three-canvas');
@@ -19,7 +18,12 @@ export default function example() {
     const scene = new THREE.Scene();
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
     camera.position.y = 6;
     camera.position.z = 10;
     scene.add(camera);
@@ -32,29 +36,28 @@ export default function example() {
 
     light.position.x = 2;
     light.position.y = 3;
-    light.position.z =3;
+    light.position.z = 3;
     light.castShadow = true;
 
     scene.add(light);
 
-
     // Controls
     new OrbitControls(camera, renderer.domElement);
-
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // Cannon (물리 엔진)
     const cannonWorld = new CANNON.World();
 
-    const defaultMaterial = new CANNON.Material("default");
+    const defaultMaterial = new CANNON.Material('default');
     const rubberMaterial = new CANNON.Material('rubber');
     const ironMaterial = new CANNON.Material('iron');
     const defaultContactMaterial = new CANNON.ContactMaterial(
         defaultMaterial,
-        defaultMaterial, {
+        defaultMaterial,
+        {
             friction: 0.5,
-            restitution : 0.9 // 반발력
+            restitution: 0.9, // 반발력
         }
     );
 
@@ -62,9 +65,10 @@ export default function example() {
 
     const rubberDefaultContactMaterial = new CANNON.ContactMaterial(
         rubberMaterial,
-        defaultMaterial,{
-            friction : 0.5,
-            restitution : 0.9
+        defaultMaterial,
+        {
+            friction: 0.5,
+            restitution: 0.9,
         }
     );
 
@@ -72,45 +76,42 @@ export default function example() {
 
     const ironDefaultContactMaterial = new CANNON.ContactMaterial(
         ironMaterial,
-        defaultMaterial,{
-            friction : 0.5,
-            restitution : 0
+        defaultMaterial,
+        {
+            friction: 0.5,
+            restitution: 0,
         }
     );
 
     cannonWorld.addContactMaterial(ironDefaultContactMaterial);
 
-    
-
     // 중력
     cannonWorld.gravity.set(0, -20, 0);
 
-    // 바닥 Geometry, Material 
+    // 바닥 Geometry, Material
     const floorShape = new CANNON.Plane();
     const floorBody = new CANNON.Body({
         mass: 0,
         position: new CANNON.Vec3(0, 0, 0),
         shape: floorShape,
-        material: defaultMaterial
+        material: defaultMaterial,
     });
 
     floorBody.quaternion.setFromAxisAngle(
         new CANNON.Vec3(-1, 0, 0),
         Math.PI / 2
-    )
+    );
     cannonWorld.addBody(floorBody);
 
-
-    // sphereMesh Geometry, Material 
+    // sphereMesh Geometry, Material
     const sphereShape = new CANNON.Sphere(0.5);
     const sphereBody = new CANNON.Body({
         mass: 3,
         position: new CANNON.Vec3(0, 5, 0),
         shape: sphereShape,
-        material: ironDefaultContactMaterial
+        material: ironDefaultContactMaterial,
     });
     cannonWorld.addBody(sphereBody);
-
 
     // Mesh
     const planeGeometry = new THREE.PlaneGeometry(6, 6);
@@ -129,7 +130,6 @@ export default function example() {
     sphereMesh.position.y = 2;
 
     scene.add(plane, sphereMesh);
-
 
     // 그리기
     const clock = new THREE.Clock();

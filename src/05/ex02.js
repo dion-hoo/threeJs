@@ -17,7 +17,12 @@ export default function example() {
     const scene = new THREE.Scene();
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
     camera.position.y = 1;
     camera.position.z = 13;
     scene.add(camera);
@@ -66,8 +71,10 @@ export default function example() {
         for (let i = 0; i < positionArray.length; i += 3) {
             // vertex9
             positionArray[i] += Math.sin(time + randomArray[i] * 10) * 0.001;
-            positionArray[i + 1] += Math.sin(time + randomArray[i + 1] * 100) * 0.001;
-            positionArray[i + 2] += Math.sin(time + randomArray[i + 2] * 100) * 0.001;
+            positionArray[i + 1] +=
+                Math.sin(time + randomArray[i + 1] * 100) * 0.001;
+            positionArray[i + 2] +=
+                Math.sin(time + randomArray[i + 2] * 100) * 0.001;
         }
 
         geometry.attributes.position.needsUpdate = true;
