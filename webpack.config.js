@@ -74,8 +74,8 @@ module.exports = {
             patterns: [
                 { from: './src/main.css', to: './main.css' },
                 { from: './src/assets', to: './assets' },
-                // { from: "./src/models", to: "./models" },
-                { from: "./src/sounds", to: "./sounds" }
+                { from: './src/models', to: './models' },
+                { from: './src/sounds', to: './sounds' },
             ],
         }),
     ],
