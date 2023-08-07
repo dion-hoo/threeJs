@@ -7,24 +7,3 @@ body {
     left: 0;
     top: 0;
 }
-
-.sections {
-    position: relative;
-    z-index: 1;
-
-    .section {
-        height: 100vh;
-        box-sizing: border-box;
-        padding: 5rem;
-
-        &:nth-child(odd) {
-            text-align: right;
-        }
-    }
-}
-
-h2 {
-    font-size: 7vmin;
-    margin: 0;
-    padding: 0;
-}
