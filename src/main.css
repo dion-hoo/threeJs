@@ -7,3 +7,25 @@ body {
     left: 0;
     top: 0;
 }
+
+ul {
+    position: relative;
+    list-style: none;
+    z-index: 1;
+}
+
+.list-item {
+    display: flex;
+    margin: 30px;
+    &:nth-child(even) .canvas-placeholder {
+        order: 2;
+        margin: 0 0 0 30px;
+    }
+}
+
+.canvas-placeholder {
+    width: 300px;
+    height: 200px;
+    /* border: 1px solid black; */
+    margin-right: 30px;
+}
